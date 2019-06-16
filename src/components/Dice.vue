@@ -2,6 +2,7 @@
   <div class="container">
     <div class="roll-button">
       <button class="button" type="button" @click="rollDice" v-if="isRollButtonVisible">Roll Dice</button>
+      <button class="button" :class="{skipped: skipSelected}" type="button" @click="skip">Skip</button>
     </div>
 
     <div class="dice-container">
@@ -24,6 +25,9 @@ export default {
     rollDice: function() {
       this.$store.commit("rollDice");
     },
+    skip: function() {
+      this.$store.commit('skip');
+    },
     isSelected(payload) {
       this.$store.commit('isSelected', payload);
     },
@@ -38,6 +42,9 @@ export default {
     },
     selected() {
       return this.$store.state.selected;
+    },
+    skipSelected() {
+      return this.$store.state.skipSelected;
     }
   }
 }
@@ -74,10 +81,10 @@ p{
 }
 .button{
   font-family: 'Passion One', cursive;
-  background-color: #43a4a5;
+  background-color: #47c6c0;
   border: 2px solid black;
   border-radius: 12px;
-  color: #55d8db;
+  color: black;
   padding: 10px 20px;
   text-align: center;
   display: inline-block;
@@ -86,8 +93,7 @@ p{
   margin: 10px;
 }
 .button:hover{
-  background-color: #51cacc;
-  color: #1e4b4c;
+  background-color: #2c7a76;
   cursor: pointer;
 }
 .button:active{
@@ -97,5 +103,10 @@ p{
 .selected{
   box-shadow: 0 5px #493410;
   transform: translateY(4px);
+}
+.skipped{
+  box-shadow: 0 5px #725119;
+  transform: translateY(4px);
+  background-color: #2c7a76;
 }
 </style>

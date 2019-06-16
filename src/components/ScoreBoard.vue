@@ -2,6 +2,7 @@
   <div class="container">
     <div class="score-container">
       <div class="first-tier">
+        <div class="rounds">Rounds: {{getRounds}}</div>
         <div class="ones" @click.once="ones()">Ones: {{getOnes}}</div>
         <div class="twos" @click.once="twos()">Twos: {{getTwos}}</div>
         <div class="threes" @click.once="threes()">Threes: {{getThrees}}</div>
@@ -80,6 +81,9 @@ export default {
   },
   //Getter for the states in store
   computed: {
+    getRounds: function() {
+      return this.$store.state.rounds;
+    },
     getOnes: function() {
       return this.$store.state.firstTier[0].value;
     },
@@ -140,7 +144,7 @@ export default {
 
 <style lang="css" scoped>
 .score-container{
-  width: 15%;
+  width: 20%;
 }
 .first-tier div{
   background-color: #47c6c0;
@@ -148,16 +152,18 @@ export default {
   border-radius: 10px;
   padding: 4px;
   margin: 3px;
-  height: 30px;
-  font-size: 20pt;
+  height: 25px;
+  font-size: 15pt;
   cursor: pointer;
 }
 .second-tier div{
   background-color: #c64747;
-  border: 2px solid black;
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 4px;
   margin: 3px;
-  height: 30px;
-  font-size: 20pt;
+  height: 25px;
+  font-size: 15pt;
   cursor: pointer;
 }
 .first-tier div:hover{
