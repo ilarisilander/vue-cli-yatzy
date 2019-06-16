@@ -32,14 +32,16 @@ export const store = new Vuex.Store({
       {id: 7, label: 'Large Straight', value: null, selected: false},
       {id: 8, label: 'Yatzy', value: null, selected: false},
       {id: 9, label: 'Chance', value: null, selected: false},
-      {id: 10, label: 'Total', value: null, selected: false},
+      {id: 10, label: 'Total', value: 0, selected: false},
     ],
     isRollButtonVisible: true,
     diceRolls: 0,
+    rounds: 0,
     sumFirst: 0,
     sumSecond: 0,
     bonus: 0,
     selected: false,
+    skipSelected: false,
   },
   mutations: {
     //This function starts the rolling of the dice
@@ -57,21 +59,49 @@ export const store = new Vuex.Store({
         state.isRollButtonVisible = false;
       }
     },
+    skip: function(state) {
+      state.skipSelected = !state.skipSelected;
+    },
     isSelected: function(state, payload) {
       if(state.allDice[payload - 1].value != null){
         state.allDice[payload - 1].selected = !state.allDice[payload -1].selected;
       }
+    },
+    replay: function(state) {
+      for(var i = 0; i < state.allDice.length; i++) {
+        state.allDice[i].value = null;
+        state.allDice[i].selected = false;
+      }
+      for(var j = 0; j < state.firstTier.length; j++) {
+        state.firstTier[j].value = null;
+      }
+      for(var k = 0; k < state.secondTier.length; k++) {
+        state.secondTier[k].value = null;
+      }
+      state.isRollButtonVisible = true;
+      state.diceRolls = 0;
+      state.rounds = 0;
+      state.sumFirst = 0;
+      state.sumSecond = 0;
+      state.bonus = 0;
+      state.selected = false;
+      state.secondTier[9].value = 0;
     },
 
     //This function is looking for the value 1 of the dice
     ones: function(state) {
       //Check if there are any "ones" in the array
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.firstTier[0].value = 0;
+          break;
+        }
         if(state.allDice[i].value == 1) {
           //If there is, then set the value of firstTier to the sum of all "ones"
           state.firstTier[0].value += state.allDice[i].value;
           state.sumFirst += state.allDice[i].value;
           state.secondTier[9].value += state.allDice[i].value;
+
           if(state.sumFirst >= 63) {
             state.bonus = 50;
           }
@@ -87,11 +117,17 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
     twos: function(state) {
       //Check if there are any "twos" in the array
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.firstTier[1].value = 0;
+          break;
+        }
         if(state.allDice[i].value == 2) {
           //If there is, then set the value of firstTier to the sum of all "twos"
           state.firstTier[1].value += state.allDice[i].value;
@@ -112,11 +148,17 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
     threes: function(state) {
       //Check if there are any "threes" in the array
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.firstTier[2].value = 0;
+          break;
+        }
         if(state.allDice[i].value == 3) {
           //If there is, then set the value of firstTier to the sum of all "threes"
           state.firstTier[2].value += state.allDice[i].value;
@@ -137,11 +179,17 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
     fours: function(state) {
       //Check if there are any "fours" in the array
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.firstTier[3].value = 0;
+          break;
+        }
         if(state.allDice[i].value == 4) {
           //If there is, then set the value of firstTier to the sum of all "fours"
           state.firstTier[3].value += state.allDice[i].value;
@@ -162,11 +210,17 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
     fives: function(state) {
       //Check if there are any "fives" in the array
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.firstTier[4].value = 0;
+          break;
+        }
         if(state.allDice[i].value == 5) {
           //If there is, then set the value of firstTier to the sum of all "sixes"
           state.firstTier[4].value += state.allDice[i].value;
@@ -187,11 +241,17 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
     sixes: function(state) {
       //Check if there are any "sixes" in the array
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.firstTier[5].value = 0;
+          break;
+        }
         if(state.allDice[i].value == 6) {
           //If there is, then set the value of firstTier to the sum of all "sixes"
           state.firstTier[5].value += state.allDice[i].value;
@@ -212,12 +272,18 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     pair: function(state) {
       var diceValue = [];
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.secondTier[0].value = 0;
+          break;
+        }
         diceValue.push(state.allDice[i].value);
       }
 
@@ -237,12 +303,18 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     twoPairs: function(state) {
       var diceValue = [];
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.secondTier[1].value = 0;
+          break;
+        }
         diceValue.push(state.allDice[i].value);
       }
       diceValue.sort();
@@ -265,7 +337,9 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     threeKind: function(state) {
@@ -275,6 +349,10 @@ export const store = new Vuex.Store({
       }
       diceValue.sort();
       for (var j = 0; j < 3; j++) {
+        if(state.skipSelected == true) {
+          state.secondTier[2].value = 0;
+          break;
+        }
         if (diceValue[j] == diceValue[j + 1] && diceValue[j + 1] == diceValue[j + 2]) {
           state.secondTier[2].value = diceValue[j] + diceValue[j + 1] + diceValue[j + 2];
           state.secondTier[9].value += diceValue[j] + diceValue[j + 1] + diceValue[j + 2];
@@ -287,7 +365,9 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     fourKind: function(state) {
@@ -297,9 +377,13 @@ export const store = new Vuex.Store({
       }
       diceValue.sort();
       for(var j = 0; j < 2; j++) {
+        if(state.skipSelected == true) {
+          state.secondTier[3].value = 0;
+          break;
+        }
         if(diceValue[j] == diceValue[j + 1] && diceValue[j + 1] == diceValue[j + 2] && diceValue[j + 2] == diceValue[j + 3]) {
-          state.secondTier[3].value = diceValue[j] + diceValue[j + 1] + diceValue[j + 2] + diceValue[j + 3]
-          state.secondTier[9].value += diceValue[j] + diceValue[j + 1] + diceValue[j + 2] + diceValue[j + 3]
+          state.secondTier[3].value = diceValue[j] + diceValue[j + 1] + diceValue[j + 2] + diceValue[j + 3];
+          state.secondTier[9].value += diceValue[j] + diceValue[j + 1] + diceValue[j + 2] + diceValue[j + 3];
         }
       }
       if(state.secondTier[3].value != null) {
@@ -309,12 +393,18 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     fullHouse: function(state) {
       var diceValue = [];
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.secondTier[4].value = 0;
+          break;
+        }
         diceValue.push(state.allDice[i].value);
       }
       diceValue.sort();
@@ -331,12 +421,18 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     smallStraight: function(state) {
       var diceValue = [];
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.secondTier[5].value = 0;
+          break;
+        }
         diceValue.push(state.allDice[i].value);
       }
       diceValue.sort();
@@ -351,12 +447,18 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     largeStraight: function(state) {
       var diceValue = [];
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.secondTier[6].value = 0;
+          break;
+        }
         diceValue.push(state.allDice[i].value);
       }
       diceValue.sort();
@@ -371,7 +473,9 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     yatzy: function(state) {
@@ -380,9 +484,12 @@ export const store = new Vuex.Store({
         diceValue.push(state.allDice[i].value);
       }
       diceValue.sort();
-      if (diceValue[0] == diceValue[1] && diceValue[1] == diceValue[2] && diceValue[2] == diceValue[3] && diceValue[3] == diceValue[4]) {
-        state.secondTier[7] = 50;
+      if(state.skipSelected == false && diceValue[0] == diceValue[1] && diceValue[1] == diceValue[2] && diceValue[2] == diceValue[3] && diceValue[3] == diceValue[4]) {
+        state.secondTier[7].value = 50;
         state.secondTier[9].value += 50;
+      }
+      else{
+        state.secondTier[7].value = 0;
       }
 
       if(state.secondTier[7].value != null) {
@@ -392,12 +499,18 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     },
 
     chance: function(state) {
       var diceValue = [];
       for(var i = 0; i < state.allDice.length; i++) {
+        if(state.skipSelected == true) {
+          state.secondTier[8].value = 0;
+          break;
+        }
         diceValue.push(state.allDice[i].value);
         state.secondTier[8].value += diceValue[i];
         state.secondTier[9].value += diceValue[i];
@@ -411,7 +524,9 @@ export const store = new Vuex.Store({
         }
         state.diceRolls = 0;
         state.isRollButtonVisible = true;
+        state.skipSelected = false;
       }
+      state.rounds++;
     }
   }
 });
