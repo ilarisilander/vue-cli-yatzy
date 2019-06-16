@@ -37,7 +37,7 @@ export default {
   position: fixed;
   top: 0;
   border: 1px solid black;
-  background-color: rgba(225,225,225,1);
+  background-color: rgba(255,255,255,1);
 }
 .modalContent {
   text-align: center;
@@ -53,36 +53,18 @@ export default {
 h1{
   margin: 0px;
 }
-.cup{
-  height: 20vh;
-}
-.winning-player{
-  margin-top: 10vh;
-}
-.button-close {
-  float:inline-start;
-  margin: 0px;
-  cursor: pointer;
-  float: right;
-  border: none;
-  font-size: 28px;
-  padding: 0px;
-  font-weight: bold;
-  color: black;
-  background: transparent;
-}
-/*Temporary CSS for the replay button*/
+
 .again-button{
   font-family: 'Passion One', cursive;
   background-color: #fff;
-  border: 2px solid black;
+  border: 3px solid black;
   border-radius: 12px;
   color: black;
   padding: 10px 20px;
   text-align: center;
   display: inline-block;
   font-size: 18px;
-  box-shadow: 0 9px #725119;
+  box-shadow: 0 9px rgba(0,0,0,0.8);
   margin: 10px;
 }
 .again-button:hover{
@@ -91,29 +73,7 @@ h1{
 }
 .again-button:active{
   background-color: #4da0d1;
-  box-shadow: 0 5px #493410;
-  transform: translateY(4px);
-}
-.add-button{
-  font-family: 'Passion One', cursive;
-  background-color: #fff;
-  border: 2px solid black;
-  border-radius: 12px;
-  color: black;
-  padding: 10px 20px;
-  text-align: center;
-  display: inline-block;
-  font-size: 18px;
-  box-shadow: 0 9px #725119;
-  margin: 10px;
-}
-.add-button:hover{
-  background-color: #4da0d1;
-  cursor: pointer;
-}
-.add-button:active{
-  background-color: #4da0d1;
-  box-shadow: 0 5px #493410;
+  box-shadow: 0 5px rgba(0,0,0,0.8);
   transform: translateY(4px);
 }
 </style>

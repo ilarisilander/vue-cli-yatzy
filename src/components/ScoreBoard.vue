@@ -3,25 +3,25 @@
     <div class="score-container">
       <div class="first-tier">
         <div class="rounds">Rounds: {{getRounds}}</div>
-        <div class="ones" @click.once="ones()">Ones: {{getOnes}}</div>
-        <div class="twos" @click.once="twos()">Twos: {{getTwos}}</div>
-        <div class="threes" @click.once="threes()">Threes: {{getThrees}}</div>
-        <div class="fours" @click.once="fours()">Fours: {{getFours}}</div>
-        <div class="fives" @click.once="fives()">Fives: {{getFives}}</div>
-        <div class="sixes" @click.once="sixes()">Sixes: {{getSixes}}</div>
+        <div class="ones" @click="ones()">Ones: {{getOnes}}</div>
+        <div class="twos" @click="twos()">Twos: {{getTwos}}</div>
+        <div class="threes" @click="threes()">Threes: {{getThrees}}</div>
+        <div class="fours" @click="fours()">Fours: {{getFours}}</div>
+        <div class="fives" @click="fives()">Fives: {{getFives}}</div>
+        <div class="sixes" @click="sixes()">Sixes: {{getSixes}}</div>
         <div class="total-first">Total: {{getSumFirst}}</div>
         <div class="bonus">Bonus: {{getBonus}}</div>
       </div>
       <div class="second-tier">
-        <div class="pairs" @click.once="pair()">Pairs: {{getPair}}</div>
-        <div class="two-pairs" @click.once="twoPairs()">Two Pairs: {{getTwoPairs}}</div>
-        <div class="three-kind" @click.once="threeKind()">Three of a kind: {{getThreeKind}}</div>
-        <div class="four-kind" @click.once="fourKind()">Four of a kind: {{getFourKind}}</div>
-        <div class="full-house" @click.once="fullHouse()">Full House: {{getFullHouse}}</div>
-        <div class="small-straight" @click.once="smallStraight()">Small Straight: {{getSmallStraight}}</div>
-        <div class="large-straight" @click.once="largeStraight()">Large Straight: {{getLargeStraight}}</div>
-        <div class="yatzy" @click.once="yatzy()">Yatzy: {{getYatzy}}</div>
-        <div class="chance" @click.once="chance()">Chance: {{getChance}}</div>
+        <div class="pairs" @click="pair()">Pairs: {{getPair}}</div>
+        <div class="two-pairs" @click="twoPairs()">Two Pairs: {{getTwoPairs}}</div>
+        <div class="three-kind" @click="threeKind()">Three of a kind: {{getThreeKind}}</div>
+        <div class="four-kind" @click="fourKind()">Four of a kind: {{getFourKind}}</div>
+        <div class="full-house" @click="fullHouse()">Full House: {{getFullHouse}}</div>
+        <div class="small-straight" @click="smallStraight()">Small Straight: {{getSmallStraight}}</div>
+        <div class="large-straight" @click="largeStraight()">Large Straight: {{getLargeStraight}}</div>
+        <div class="yatzy" @click="yatzy()">Yatzy: {{getYatzy}}</div>
+        <div class="chance" @click="chance()">Chance: {{getChance}}</div>
         <div class="total-second">Total: {{getGrandTotal}}</div>
       </div>
     </div>
@@ -143,8 +143,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 .score-container{
-  width: 20%;
+  width: 100%;
 }
 .first-tier div{
   background-color: #47c6c0;
@@ -154,6 +155,7 @@ export default {
   margin: 3px;
   height: 25px;
   font-size: 15pt;
+  font-weight: bold;
   cursor: pointer;
 }
 .second-tier div{
@@ -164,6 +166,7 @@ export default {
   margin: 3px;
   height: 25px;
   font-size: 15pt;
+  font-weight: bold;
   cursor: pointer;
 }
 .first-tier div:hover{
@@ -174,5 +177,20 @@ export default {
 }
 .ones{
   background-color: #fff;
+}
+
+
+/*Mobile*/
+@media screen and (max-width: 767px) {
+  .first-tier div{
+    height: 15px;
+    font-size: 10pt;
+    font-weight: bold;
+  }
+  .second-tier div{
+    height: 15px;
+    font-weight: bold;
+    font-size: 10pt;
+  }
 }
 </style>
