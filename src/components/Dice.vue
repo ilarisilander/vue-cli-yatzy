@@ -159,7 +159,7 @@ export default {
     cursor: pointer;
   }
   .roll-button{
-    margin-left: 20%;
+    margin-left: 10%;
   }
   .button{
     font-family: 'Passion One', cursive;
