@@ -32,9 +32,8 @@ export default {
 <style scoped>
 .modalBox {
   font-family: 'Passion One', cursive;
-  width: 20%;
   height: 100%;
-  position: fixed;
+  position: absolute;
   top: 0;
   border: 1px solid black;
   background-color: rgba(255,255,255,1);
@@ -42,7 +41,6 @@ export default {
 .modalContent {
   text-align: center;
   background-size: contain;
-  background-repeat: repeat;
   padding: 20px 30px;
   color: black;
   font-size: 18px;
@@ -75,5 +73,18 @@ h1{
   background-color: #4da0d1;
   box-shadow: 0 5px rgba(0,0,0,0.8);
   transform: translateY(4px);
+}
+/*Desktop*/
+@media screen and (min-width: 768px){
+  .modalBox{
+    width: 400px;
+  }
+}
+/*Mobile*/
+@media screen and (max-width: 767px) {
+  .modalBox{
+    width: 300px;
+    height: 800px;
+  }
 }
 </style>
