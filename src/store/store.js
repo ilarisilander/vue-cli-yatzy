@@ -105,24 +105,21 @@ export const store = new Vuex.Store({
       state.selected = false;
       state.secondTier[9].value = 0;
     },
-
     /*
-      All the functions in the first tier are similar. There is room for a lot of
-      optimization here. Documentation only needed for the first function of the first tier.
+      This function checks ones to sixes. The checked number is the payload, and is
+      sent from ScoreBoard.vue
     */
-
-    //This function checks if any of the dice are of value 1
-    ones: function(state) {
+    check: function(state, payload) {
       //Counter for knowing if any clicks were successful (tier field to 0 or > 0)
       var counter = 0;
       //This checks if the skip button is selected or not
-      if(state.skipSelected == true && state.firstTier[0].value == null) {
-        //Set value of firstTier (Ones) to 0
-        state.firstTier[0].value = 0;
+      if(state.skipSelected == true && state.firstTier[payload - 1].value == null) {
+        //Set value of firstTier (payload) to 0
+        state.firstTier[payload - 1].value = 0;
         //Increase the "successful clicks" counter with 1
         counter++;
-        //Checks if the value of "ones" is 0. If it is 0 this will reset some values
-        if(state.firstTier[0].value == 0) {
+        //Checks if the value of the tier (payload) is 0. If it is 0 this will reset some values
+        if(state.firstTier[payload - 1].value == 0) {
           //Resets all dice values to null and all dice "selected" to false
           for(var j = 0; j < state.allDice.length; j++) {
             state.allDice[j].value = null;
@@ -134,14 +131,14 @@ export const store = new Vuex.Store({
           state.isRollButtonVisible = true;
         }
       }
-      //Checks if the value of "ones" is null
-      else if(state.firstTier[0].value == null) {
+      //Checks if the value of the tier (payload) is null
+      else if(state.firstTier[payload - 1].value == null) {
         //Iterate through all the dice in the dice array (in state)
         for(var i = 0; i < state.allDice.length; i++) {
-          //Checks if the current die has the value of 1
-          if(state.allDice[i].value == 1) {
-            //Sets first tier (ones) to it's current value + the value of the current die
-            state.firstTier[0].value += state.allDice[i].value;
+          //Checks if the current die has the same value as the payload
+          if(state.allDice[i].value == payload) {
+            //Sets first tier (payload) to it's current value + the value of the current die
+            state.firstTier[payload - 1].value += state.allDice[i].value;
             //Sets the sum counter of the first tier to it's current value + the current die value
             state.sumFirst += state.allDice[i].value;
             //Sets the second tiers grand total to it's current value + the die value
@@ -159,8 +156,8 @@ export const store = new Vuex.Store({
             continue;
           }
         }
-        //If the field of "ones" is more than 0, then reset dice, dice rolls and roll button (visibility)
-        if(state.firstTier[0].value > 0) {
+        //If the first tier (payload) is more than 0, then reset dice, dice rolls and roll button (visibility)
+        if(state.firstTier[payload - 1].value > 0) {
           for(var k = 0; k < state.allDice.length; k++) {
             state.allDice[k].value = null;
             state.allDice[k].selected = false;
@@ -175,227 +172,6 @@ export const store = new Vuex.Store({
         state.rounds++;
       }
       //Deselect the skip button
-      state.skipSelected = false;
-    },
-    //This function checks if any of the dice are of value 2
-    twos: function(state) {
-      var counter = 0;
-      if(state.skipSelected == true && state.firstTier[1].value == null) {
-        state.firstTier[1].value = 0;
-        counter++;
-        if(state.firstTier[1].value == 0) {
-          for(var j = 0; j < state.allDice.length; j++) {
-            state.allDice[j].value = null;
-            state.allDice[j].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      else if(state.firstTier[1].value == null) {
-        for(var i = 0; i < state.allDice.length; i++) {
-          if(state.allDice[i].value == 2) {
-            state.firstTier[1].value += state.allDice[i].value;
-            state.sumFirst += state.allDice[i].value;
-            state.secondTier[9].value += state.allDice[i].value;
-            counter++;
-            if(state.sumFirst >= 63) {
-              state.bonus = 50;
-            }
-          }
-          else{
-            continue;
-          }
-        }
-        if(state.firstTier[1].value > 0) {
-          for(var k = 0; k < state.allDice.length; k++) {
-            state.allDice[k].value = null;
-            state.allDice[k].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      if(counter > 0) {
-        state.rounds++;
-      }
-      state.skipSelected = false;
-    },
-    //This function checks if any of the dice are of value 3
-    threes: function(state) {
-      var counter = 0;
-      if(state.skipSelected == true && state.firstTier[2].value == null) {
-        state.firstTier[2].value = 0;
-        counter++;
-        if(state.firstTier[2].value == 0) {
-          for(var j = 0; j < state.allDice.length; j++) {
-            state.allDice[j].value = null;
-            state.allDice[j].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      else if(state.firstTier[2].value == null) {
-        for(var i = 0; i < state.allDice.length; i++) {
-          if(state.allDice[i].value == 3) {
-            state.firstTier[2].value += state.allDice[i].value;
-            state.sumFirst += state.allDice[i].value;
-            state.secondTier[9].value += state.allDice[i].value;
-            counter++;
-            if(state.sumFirst >= 63) {
-              state.bonus = 50;
-            }
-          }
-          else{
-            continue;
-          }
-        }
-        if(state.firstTier[2].value > 0) {
-          for(var k = 0; k < state.allDice.length; k++) {
-            state.allDice[k].value = null;
-            state.allDice[k].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      if(counter > 0) {
-        state.rounds++;
-      }
-      state.skipSelected = false;
-    },
-    //This function checks if any of the dice are of value 4
-    fours: function(state) {
-      var counter = 0;
-      if(state.skipSelected == true && state.firstTier[3].value == null) {
-        state.firstTier[3].value = 0;
-        counter++;
-        if(state.firstTier[3].value == 0) {
-          for(var j = 0; j < state.allDice.length; j++) {
-            state.allDice[j].value = null;
-            state.allDice[j].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      else if(state.firstTier[3].value == null) {
-        for(var i = 0; i < state.allDice.length; i++) {
-          if(state.allDice[i].value == 4) {
-            state.firstTier[3].value += state.allDice[i].value;
-            state.sumFirst += state.allDice[i].value;
-            state.secondTier[9].value += state.allDice[i].value;
-            counter++;
-            if(state.sumFirst >= 63) {
-              state.bonus = 50;
-            }
-          }
-          else{
-            continue;
-          }
-        }
-        if(state.firstTier[3].value > 0) {
-          for(var k = 0; k < state.allDice.length; k++) {
-            state.allDice[k].value = null;
-            state.allDice[k].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      if(counter > 0) {
-        state.rounds++;
-      }
-      state.skipSelected = false;
-    },
-    //This function checks if any of the dice are of value 5
-    fives: function(state) {
-      var counter = 0;
-      if(state.skipSelected == true && state.firstTier[4].value == null) {
-        state.firstTier[4].value = 0;
-        counter++;
-        if(state.firstTier[4].value == 0) {
-          for(var j = 0; j < state.allDice.length; j++) {
-            state.allDice[j].value = null;
-            state.allDice[j].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      else if(state.firstTier[4].value == null) {
-        for(var i = 0; i < state.allDice.length; i++) {
-          if(state.allDice[i].value == 5) {
-            state.firstTier[4].value += state.allDice[i].value;
-            state.sumFirst += state.allDice[i].value;
-            state.secondTier[9].value += state.allDice[i].value;
-            counter++;
-            if(state.sumFirst >= 63) {
-              state.bonus = 50;
-            }
-          }
-          else{
-            continue;
-          }
-        }
-        if(state.firstTier[4].value > 0) {
-          for(var k = 0; k < state.allDice.length; k++) {
-            state.allDice[k].value = null;
-            state.allDice[k].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-
-      if(counter > 0) {
-        state.rounds++;
-      }
-      state.skipSelected = false;
-    },
-    //This function checks if any of the dice are of value 6
-    sixes: function(state) {
-      var counter = 0;
-      if(state.skipSelected == true && state.firstTier[5].value == null) {
-        state.firstTier[5].value = 0;
-        counter++;
-        if(state.firstTier[5].value == 0) {
-          for(var j = 0; j < state.allDice.length; j++) {
-            state.allDice[j].value = null;
-            state.allDice[j].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      else if(state.firstTier[5].value == null) {
-        for(var i = 0; i < state.allDice.length; i++) {
-          if(state.allDice[i].value == 6) {
-            state.firstTier[5].value += state.allDice[i].value;
-            state.sumFirst += state.allDice[i].value;
-            state.secondTier[9].value += state.allDice[i].value;
-            counter++;
-            if(state.sumFirst >= 63) {
-              state.bonus = 50;
-            }
-          }
-          else{
-            continue;
-          }
-        }
-        if(state.firstTier[5].value > 0) {
-          for(var k = 0; k < state.allDice.length; k++) {
-            state.allDice[k].value = null;
-            state.allDice[k].selected = false;
-          }
-          state.diceRolls = 0;
-          state.isRollButtonVisible = true;
-        }
-      }
-      if(counter > 0) {
-        state.rounds++;
-      }
       state.skipSelected = false;
     },
     //This function checks if there are any ONE pair, and chooses the highest pair

@@ -3,12 +3,12 @@
     <div class="score-container">
       <div class="first-tier">
         <div class="rounds">Rounds: {{getRounds}}</div>
-        <div class="ones" @click="ones()">Ones: {{getOnes}}</div>
-        <div class="twos" @click="twos()">Twos: {{getTwos}}</div>
-        <div class="threes" @click="threes()">Threes: {{getThrees}}</div>
-        <div class="fours" @click="fours()">Fours: {{getFours}}</div>
-        <div class="fives" @click="fives()">Fives: {{getFives}}</div>
-        <div class="sixes" @click="sixes()">Sixes: {{getSixes}}</div>
+        <div class="ones" @click="check(1)">Ones: {{getOnes}}</div>
+        <div class="twos" @click="check(2)">Twos: {{getTwos}}</div>
+        <div class="threes" @click="check(3)">Threes: {{getThrees}}</div>
+        <div class="fours" @click="check(4)">Fours: {{getFours}}</div>
+        <div class="fives" @click="check(5)">Fives: {{getFives}}</div>
+        <div class="sixes" @click="check(6)">Sixes: {{getSixes}}</div>
         <div class="total-first">Total: {{getSumFirst}}</div>
         <div class="bonus">Bonus: {{getBonus}}</div>
       </div>
@@ -32,23 +32,9 @@
 export default {
   //Calls functions in the store
   methods: {
-    ones: function() {
-      this.$store.commit('ones');
-    },
-    twos: function() {
-      this.$store.commit('twos');
-    },
-    threes: function() {
-      this.$store.commit('threes');
-    },
-    fours: function() {
-      this.$store.commit('fours');
-    },
-    fives: function() {
-      this.$store.commit('fives');
-    },
-    sixes: function() {
-      this.$store.commit('sixes');
+    //This function is used to check ones to sixes
+    check: function(payload) {
+      this.$store.commit('check', payload);
     },
     pair: function() {
       this.$store.commit('pair');
